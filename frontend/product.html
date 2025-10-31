@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Details</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="product-details"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    fetch(`http://localhost:5000/api/products/${id}`)
+      .then(res => res.json())
+      .then(p => {
+        document.getElementById("product-details").innerHTML = `
+          <img src="${p.image}" alt="${p.name}" />
+          <h2>${p.name}</h2>
+          <p>${p.description}</p>
+          <p>Price: ₹${p.price}</p>
+          <button onclick="addToCart('${p._id}', '${p.name}', ${p.price})">Add to Cart</button>
+        `;
+      });
+
+    function addToCart(id, name, price) {
+      let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      cart.push({ id, name, price });
+      localStorage.setItem("cart", JSON.stringify(cart));
+      alert("Added to cart!");
+    }
+  </script>
+</body>
+</html>

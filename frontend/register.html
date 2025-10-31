@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register - E-Commerce</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .register-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #28a745;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    .link {
+      margin-top: 10px;
+      display: block;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .link:hover {
+      color: #28a745;
+    }
+header { background: #333; color: #fff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+
+  </style>
+</head>
+<body>
+     
+  <div class="register-container">
+    <header>
+    <h1>🛍️ ShopEase</h1>
+    <nav>
+      <a href="index.html" style="color: white;">Home</a>
+      
+    </nav>
+  </header>
+    <h2>Create Account</h2>
+    <input type="text" id="name" placeholder="name" required>
+    <input type="text" id="username" placeholder="Choose username" required>
+    <input type="password" id="password" placeholder="Choose password" required>
+    <button id="registerBtn">Register</button>
+    <a class="link" href="login.html">Already have an account? Login</a>
+  </div>
+
+  <script>
+    document.getElementById("registerBtn").addEventListener("click", () => {
+      const name = document.getElementById("name").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password || !name) {
+        alert("Please fill in both fields!");
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const userExists = users.some(u => u.username === username);
+
+      if (userExists) {
+        alert("Username already exists!");
+        return;
+      }
+
+      users.push({ name,username, password });
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Registration successful! You can now login.");
+
+      window.location.href = "login.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - E-Commerce</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #74ebd5 0%, #9face6 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .link {
+      margin-top: 10px;
+      display: block;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .link:hover {
+      color: #007bff;
+    }
+    header { background: #333; color: #fff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+  </style>
+   
+</head>
+<body>
+   
+  <div class="login-container">
+     <header>
+    <h1>🛍️ ShopEase</h1>
+    <nav >
+      <a href="index.html" style="color: white;">Home</a>
+     
+    </nav>
+  </header>
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Enter username" required>
+    <input type="password" id="password" placeholder="Enter password" required>
+    <button id="loginBtn">Login</button>
+    <a class="link" href="register.html">Don’t have an account? Register</a>
+  </div>
+
+  <script>
+    document.getElementById("loginBtn").addEventListener("click", () => {
+    
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !password) {
+        alert("Please enter both username and password!");
+        return;
+      }
+
+      // Get user list from localStorage
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const foundUser = users.find(u => u.username === username && u.password === password);
+
+      if (!foundUser) {
+        alert("Invalid username or password!");
+        return;
+      }
+
+      // Save login session
+      localStorage.setItem("user", JSON.stringify(foundUser));
+      alert(`Welcome back, ${username}!`);
+
+      // Redirect user if they came from cart
+      const redirect = localStorage.getItem("redirectAfterLogin");
+      if (redirect) {
+        localStorage.removeItem("redirectAfterLogin");
+        window.location.href = redirect;
+      } else {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+</body>
+</html>
